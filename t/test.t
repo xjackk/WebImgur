@@ -1,6 +1,10 @@
 use Test::More;
 #use lib '/home/xjackk/hacking/scripts/PerlImgur/lib/';
 use lib '/Users/jackkillilea/hacking/scripts/PerlImgur/lib/';
+
+# Before `make install' is performed this script should be runnable with
+# `make test'. After `make install' it should work as `perl Image-Imgur.t'
+
 BEGIN { use_ok('Web::Imgur') };
 
 ## Testing Vars
