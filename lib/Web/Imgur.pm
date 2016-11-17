@@ -1,14 +1,18 @@
 #!/usr/bin/perl -w
 package Web::Imgur;
+
 ## Web::Imgur - A quick reissue of Image::Imgur
 ## Uploads pictures anonymously to Imgur.
 ## Author : jrK (jaaacckz1@gmail.com)
 ## jackkillilea.com
 
-use strict;
 use LWP;
+<<<<<<< HEAD
 use JSON;
 use Moose;
+=======
+use Moose; # adds warnings and strict.
+>>>>>>> 690913330ce7a8eebdb7f02a7f8b832ed9f56006
 use MIME::Base64;
 
 has 'clientID' => (is => 'rw', isa => 'Str');
