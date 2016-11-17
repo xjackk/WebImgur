@@ -1,16 +1,12 @@
 use Test::More;
-<<<<<<< HEAD
 use strict;
 
 use lib '/home/xjackk/hacking/scripts/WebImgur/lib/';
 #use lib '/Users/jackkillilea/hacking/scripts/WebImgur/lib/';
-=======
-#use lib '/home/xjackk/hacking/scripts/PerlImgur/lib/';
-use lib '/Users/jackkillilea/hacking/scripts/PerlImgur/lib/';
 
 # Before `make install' is performed this script should be runnable with
 # `make test'. After `make install' it should work as `perl Image-Imgur.t'
->>>>>>> 690913330ce7a8eebdb7f02a7f8b832ed9f56006
+
 
 BEGIN { use_ok('Web::Imgur') };
 
@@ -22,10 +18,10 @@ my $clientSecret = "879e010d91abd02fd0ccfc211be0f0e2b1073b69";
 my $imgur = new Web::Imgur(clientID => $clientID, clientSec => $clientSecret);
 ok($imgur);
 
-my $picUpload = $imgur->upload_anon('/Users/jackkillilea/Downloads/bmwe30m3.jpg');
+my $picUpload = $imgur->upload('/Users/jackkillilea/Downloads/bmwe30m3.jpg');
 ok($picUpload);
 
-my $onlinePicUpload = $imgur->upload_anon("http://roa.h-cdn.co/assets/15/27/980x490/landscape-1435681410-m3.jpg");
+my $onlinePicUpload = $imgur->upload("http://roa.h-cdn.co/assets/15/27/980x490/landscape-1435681410-m3.jpg");
 ok($onlinePicUpload);
 
 done_testing();

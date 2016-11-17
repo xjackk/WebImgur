@@ -7,12 +7,9 @@ package Web::Imgur;
 ## jackkillilea.com
 
 use LWP;
-<<<<<<< HEAD
 use JSON;
 use Moose;
-=======
 use Moose; # adds warnings and strict.
->>>>>>> 690913330ce7a8eebdb7f02a7f8b832ed9f56006
 use MIME::Base64;
 
 has 'clientID' => (is => 'rw', isa => 'Str');
@@ -22,29 +19,28 @@ has 'clientSec' => (is => 'rw', isa => 'Str');
 ## Reads the file, mmhm.
 ##
 sub readfile {
-		my $filename = shift;
-		my $fh;
-		open $fh, "<", $filename or return -1;
-		binmode $fh;
-		return encode_base64(join("" => <$fh>));
+	my $filename = shift;
+	my $fh;
+	open $fh, "<", $filename or return -1;
+	binmode $fh;
+	return encode_base64(join("" => <$fh>));
 }
 
 ##
 ## Does an Anonymous upload to imgur. Post will not
 ## be attached to your account.
 ##
-sub upload_anon {
+sub upload {
 	(my $self, my $picture) = @_;
-		return 0 unless($self->clientID);
-		my $link;
-		if ($picture =~ /http:\/\//) {
-				$link = $picture;
-			} elsif ($picture =~ /https:\/\//) {
-				$link = $picture;
-			} else {
-				open my $fh, "<", $picture or return -1;
-				$link = readfile($picture);
-		}
+	return 0 unless($self->clientID);
+	my $link;
+	if ($picture =~ /http:\/\//) {
+		$link = $picture;
+	}
+	else {
+		open my $fh, "<", $picture or return -1;
+		$link = readfile($picture);
+	}
 	$link = $self->uploadImageAnon($link);
 	return $link;
 }
@@ -55,7 +51,8 @@ sub upload_anon {
 sub uploadImageAnon {
 	(my $self, my $picture) = @_;
 	my $ua = LWP::UserAgent->new(agent => "Perl");
-	my $req = $ua->post("https://api.imgur.com/3/image", ["image" => $picture], 'Authorization' => "Client-ID baf4231de7fd38e" );
+	my $cID = $self->clientID(); # Moose saves our Client ID!
+	my $req = $ua->post("https://api.imgur.com/3/image", ["image" => $picture], 'Authorization' => "Client-ID $cID");
 	if ($req->is_success) {
 		my $message = $req->decoded_content;
 		my $json = from_json($message);
