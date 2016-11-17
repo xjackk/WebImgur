@@ -8,7 +8,6 @@ package Web::Imgur;
 
 use LWP;
 use JSON;
-use Moose;
 use Moose; # adds warnings and strict.
 use MIME::Base64;
 
@@ -16,25 +15,16 @@ has 'clientID' => (is => 'rw', isa => 'Str');
 has 'clientSec' => (is => 'rw', isa => 'Str');
 
 ##
-## Reads the file, mmhm.
-##
-sub readfile {
-	my $filename = shift;
-	my $fh;
-	open $fh, "<", $filename or return -1;
-	binmode $fh;
-	return encode_base64(join("" => <$fh>));
-}
-
-##
 ## Does an Anonymous upload to imgur. Post will not
-## be attached to your account.
+## be attached to your account. (Could consider adding OAuth features...)
 ##
 sub upload {
 	(my $self, my $picture) = @_;
 	return 0 unless($self->clientID);
 	my $link;
 	if ($picture =~ /http:\/\//) {
+		$link = $picture;
+	} elsif ($picture =~ /https:\/\//) {
 		$link = $picture;
 	}
 	else {
@@ -46,7 +36,7 @@ sub upload {
 }
 
 ##
-## upload Image Anon helpery
+## Image Upload Helper
 ##
 sub uploadImageAnon {
 	(my $self, my $picture) = @_;
@@ -56,12 +46,24 @@ sub uploadImageAnon {
 	if ($req->is_success) {
 		my $message = $req->decoded_content;
 		my $json = from_json($message);
-		print "Upload Complete! Your link is : " .  $json->{"data"}{"link"} . "\n";
+		print $json->{"data"}{"link"};
 	} else {
 		print "HTTP POST error code: ", $req->code, "\n";
 		print "HTTP POST error message: ", $req->message, "\n";
 	}
 }
+
+##
+## Reads our local file for upload.
+##
+sub readfile {
+	my $filename = shift;
+	my $fh;
+	open $fh, "<", $filename or return -1;
+	binmode $fh;
+	return encode_base64(join("" => <$fh>));
+}
+
 
 1;
 
