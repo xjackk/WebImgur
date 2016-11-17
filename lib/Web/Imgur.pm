@@ -7,6 +7,7 @@ package Web::Imgur;
 
 use strict;
 use LWP;
+use JSON;
 use Moose;
 use MIME::Base64;
 
@@ -50,7 +51,7 @@ sub upload_anon {
 sub uploadImageAnon {
 	(my $self, my $picture) = @_;
 	my $ua = LWP::UserAgent->new(agent => "Perl");
-	my $req = $ua->post("https://api.imgur.com/3/image", ["image" => $picture], 'Authorization' => "Client-ID $self->clientID" );
+	my $req = $ua->post("https://api.imgur.com/3/image", ["image" => $picture], 'Authorization' => "Client-ID baf4231de7fd38e" );
 	if ($req->is_success) {
 		my $message = $req->decoded_content;
 		my $json = from_json($message);
@@ -61,101 +62,6 @@ sub uploadImageAnon {
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1;
 
 

@@ -1,6 +1,9 @@
 use Test::More;
-#use lib '/home/xjackk/hacking/scripts/PerlImgur/lib/';
-use lib '/Users/jackkillilea/hacking/scripts/PerlImgur/lib/';
+use strict;
+
+use lib '/home/xjackk/hacking/scripts/WebImgur/lib/';
+#use lib '/Users/jackkillilea/hacking/scripts/WebImgur/lib/';
+
 BEGIN { use_ok('Web::Imgur') };
 
 ## Testing Vars
