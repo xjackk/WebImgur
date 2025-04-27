@@ -46,10 +46,11 @@ sub uploadImageAnon {
 	if ($req->is_success) {
 		my $message = $req->decoded_content;
 		my $json = from_json($message);
-		print $json->{"data"}{"link"};
+		return $json->{"data"}{"link"};
 	} else {
-		print "HTTP POST error code: ", $req->code, "\n";
-		print "HTTP POST error message: ", $req->message, "\n";
+		print STDERR "HTTP POST error code: ", $req->code, "\n";
+		print STDERR "HTTP POST error message: ", $req->message, "\n";
+		return undef;
 	}
 }
 
